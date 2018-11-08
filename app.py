@@ -1,26 +1,32 @@
 #!/usr/bin/env python3
 
+# Satellite features
+# @author: Maxfield Wang
+# @date Nov 7, 2018
+
 import argparse
+import logging
 import os
 import extractor
 args_parser = argparse.ArgumentParser(
     prog=extractor,
     description="A script to dump out Youdao dict or Youdao\
                 recite word 's wordbook.",
-    usage="app.py PATH-TO-WORDBOOK-DB-FILE [OPTIONS]"
+    usage="app.py PATH-TO-WORDBOOK-DB-FILE [OPTIONS]\nType `-h` or `--help` to see more help"
 )
 
 args_parser.add_argument("source",
-                        help="The path to your wordbook database file")
+                         help="The path to your wordbook database file")
 
 #args_parser.add_argument("d", "dest", help="Destination path to the output directory")
-
 args = args_parser.parse_args()
-input_db = os.path.abspath(args.source)
+
+
 def check_file(db_path):
     print("Judging the input file...")
     cmd = "file " + db_path
     os.system(cmd)
+
 
 def writeout(wordlist):
     work_dir = os.path.abspath("./")
@@ -35,9 +41,11 @@ def writeout(wordlist):
                 f.write(word + os.linesep)
         print("Done. Go to `out` dir and see your output file.")
     except IOError as ioe:
-        print(ioe)
+        logging.exception(ioe)
+
 
 if __name__ == "__main__":
+    input_db = os.path.abspath(args.source)
     check_file(input_db)
     wordlist = extractor.extract(input_db)
     writeout(wordlist)
