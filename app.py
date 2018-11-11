@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# Satellite features
-# @author: Maxfield Wang
+# Satellite features 
+# @author: Maxfield Wang (moposx)
 # @date Nov 7, 2018
 
 import argparse
@@ -28,18 +28,19 @@ def check_file(db_path):
     os.system(cmd)
 
 
-def writeout(wordlist):
+def writeout(filename, wordlist):
     work_dir = os.path.abspath("./")
     out_path = os.path.join(work_dir, "out")
     if not os.path.exists(out_path):
         os.mkdir(out_path)
-    out_file = os.path.join(out_path, "output.txt")
+    out_file = os.path.join(out_path, filename)
+
     try:
         print("Writing file...Please wait...")
-        with open(out_file, "w", encoding="utf-8") as f:
+        with open(out_file, "w", encoding="utf-8", errors="ignore") as f:
             for word in wordlist:
                 f.write(word + os.linesep)
-        print("Done. Go to `out` dir and see your output file.")
+        print("Done! Go to `out` dir and see your output file(s).")
     except IOError as ioe:
         logging.exception(ioe)
 
@@ -47,5 +48,7 @@ def writeout(wordlist):
 if __name__ == "__main__":
     input_db = os.path.abspath(args.source)
     check_file(input_db)
-    wordlist = extractor.extract(input_db)
-    writeout(wordlist)
+    extractor_obj = extractor.Extractor()
+    extracted_wordlist = extractor_obj.extract(input_db)
+    writeout("output.txt", extracted_wordlist)
+    writeout("normalwords.txt", sorted(extractor_obj.normal_words))

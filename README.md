@@ -11,20 +11,16 @@ python3 app.py PATH-TO-YOUR-WORDBOOK-DB
 
 ## Q&A
 - 如何得到单词本数据库？
-> 截止到当前版本（有道背单词 v1.5.3, 有道词典v7.8.0)，脚本都能正常提取。
-> 数据库文件的路径在： 
->`/data/data/com.youdao.reciteword/databases/wordbook`（有道背单词）
-> `/data/data/com.youdao.dict/databases/notes.db`（有道词典）
+截止到当前版本（有道背单词 v1.5.3, 有道词典v7.8.0)，脚本都能正常提取。
+数据库文件的路径在： 
+`/data/data/com.youdao.dict/databases/notes.db`（有道词典）
+`/data/data/com.youdao.reciteword/databases/wordbook`（有道背单词）
+N.B. 有道背单词如果想获取官方词单，需要曾经背过/切换到过该此书（应该是这样，因为我在我的数据库里面发现许多`NULL`值，是属于我没有背过的词书）
+
 
 ## How does it work
-使用`file`指令：
-```shell-source
-file ./notes.db
-```
-```output
-./notes.db: SQLite 3.x database, user version 7, last written using SQLite version 3019004
-```
+[See here](https://moposx.tk/2018/11/08/youdao-wordbook-extractor/)
 
-可以看出这个数据库是SQLite写成的。打开数据库发现这个数据库有很多张表，而单词存储在`notes`表中，这张表里面包含很多信息，包括单词的拼写，简单释义和音标等。这样通过操作对应的项目便可取得对应的数据。
-
-PS: 我最初的想法是只取得英文单词，方便未来一键导入别的背单词app，但是后来发现也需要保留别的单词，于是移除了筛选。稍后会加入更多词单的提取。
+## Disclaimer
+本脚本**仅供交流学习之用**，请遵守相应的法律法规。对于不当使用本脚本产生的不良后果，作者**不承担**任何责任。
+对于未提及之事项，作者**保留解释权**。
